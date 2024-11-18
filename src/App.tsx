@@ -1,10 +1,23 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 import './App.css';
-import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts.js';
+// import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST} from './consts.js';
 
+import Character from './Components/Character'
+import Attributes from './Components/Attributes';
+import { CHARACTER_LIST_API_URL } from './consts';
 
 function App() {
-  const [num, setNum] = useState<number>(0);
+  const [characterList, setCharacterList] = useState([]);
+  useEffect(() => {
+    if (characterList.length === 0) {
+        fetch(CHARACTER_LIST_API_URL)
+          .then((response) => response.json())
+          .then((response) => {setCharacterList(response.body)})
+          .catch(() => {alert("Failed to get character list!");});
+    }
+}, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -12,10 +25,13 @@ function App() {
       </header>
       <section className="App-section">
         <div>
-          Value:
-          {num}
-          <button>+</button>
-          <button>-</button>
+        {characterList.map((character, index) => (
+                    <Character
+                      key={index}
+                      characterIndex={index}
+                      attributes={character.attributes}
+                    />
+                ))}
         </div>
       </section>
     </div>

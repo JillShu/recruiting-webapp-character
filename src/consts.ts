@@ -1,5 +1,7 @@
 import type { Attributes, Class } from "./types";
 
+export const CHARACTER_LIST_API_URL = "https://recruiting.verylongdomaintotestwith.ca/api/{JillShu}/character "
+
 export const ATTRIBUTE_LIST = [
     'Strength',
     'Dexterity',
